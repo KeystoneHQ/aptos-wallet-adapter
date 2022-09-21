@@ -17,7 +17,12 @@ Supports:
 - [Hippo web wallet](https://hippo-wallet-test.web.app/)
 - [Pontem Wallet](https://pontem.network/pontem-wallet)
 - [Spika wallet](https://spika.app)
+<<<<<<< HEAD
 - [Rise wallet](https://risewallet.io/)
+=======
+- [Spika web wallet](https://spika.app)
+- [Aptos snap](https://chrome.google.com/webstore/detail/metamask-flask-developmen/ljfoeinjpaedjfecbmggjgodbgkmjkjk)
+>>>>>>> 4a33a17 (feature: support aptos snap)
 
 **Please refer to the readme within aptos-wallet-adapter pacakages**
 
