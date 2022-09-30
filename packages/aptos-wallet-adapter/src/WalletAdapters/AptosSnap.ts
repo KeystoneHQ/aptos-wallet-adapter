@@ -14,15 +14,14 @@ import {
 } from '../WalletProviders/errors';
 import {
   AccountKeys,
-  BaseWalletAdapter, scopePollingDetectionStrategy,
+  BaseWalletAdapter,
+  scopePollingDetectionStrategy,
   WalletName,
   WalletReadyState,
   SignMessagePayload,
   SignMessageResponse
 } from './BaseAdapter';
-import {
-  PublicAccount,
-} from '@keystonehq/aptossnap-adapter/build/types';
+import { PublicAccount } from '@keystonehq/aptossnap-adapter/build/types';
 import WalletAdapter from '@keystonehq/aptossnap-adapter';
 
 interface IAptosSnap {
@@ -44,6 +43,7 @@ declare const window: SnapWindow;
 export const AptosSnapName = 'Snap' as WalletName<'Snap'>;
 
 export interface AptosSnapAdapterConfig {
+  network: 'testnet' | 'mainnet' | 'devnet';
   provider?: IAptosSnap;
   // network?: WalletAdapterNetwork;
   timeout?: number;
@@ -71,14 +71,19 @@ export class AptosSnapAdapter extends BaseWalletAdapter {
 
   protected _wallet: any | null;
 
-  constructor({
-    // provider,
-    // network = WalletAdapterNetwork.Mainnet,
-    timeout = 10000
-  }: AptosSnapAdapterConfig = {}) {
+  constructor(
+    {
+      // provider,
+      network,
+      timeout = 10000
+    }: AptosSnapAdapterConfig = { network: 'devnet' }
+  ) {
+    console.log('---------------');
+    console.log("constructor is called");
+    console.log('---------------');
     super();
     //@ts-ignore
-    this._provider = new WalletAdapter({ network: 'devnet' }, 'npm:@keystonehq/aptossnap');
+    this._provider = new WalletAdapter({ network }, 'npm:@keystonehq/aptossnap');
     // this._network = network;
     this._timeout = timeout;
     this._connecting = false;
@@ -107,6 +112,9 @@ export class AptosSnapAdapter extends BaseWalletAdapter {
   }
 
   get connected(): boolean {
+    console.log('---------------');
+    console.log("connected is called");
+    console.log('---------------');
     return !!this._wallet?.isConnected;
   }
 
@@ -115,6 +123,9 @@ export class AptosSnapAdapter extends BaseWalletAdapter {
   }
 
   async connect(): Promise<void> {
+    console.log('---------------');
+    console.log("connect is called");
+    console.log('---------------');
     try {
       if (this.connected || this.connecting) return;
       if (
@@ -167,9 +178,7 @@ export class AptosSnapAdapter extends BaseWalletAdapter {
 
       try {
         const provider = this._provider;
-        const response = await provider?.signTransaction(
-          transaction as EntryFunctionPayload
-        );
+        const response = await provider?.signTransaction(transaction as EntryFunctionPayload);
         if (response) {
           return new Uint8Array([]);
         } else {
